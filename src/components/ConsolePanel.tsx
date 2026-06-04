@@ -91,7 +91,7 @@ export default function ConsolePanel({
           "===========================================================\n" +
           "  help               Print this assistance directory\n" +
           "  ls / projects      List all interactive project codebases\n" +
-          "  cd <project_id>    Navigate to specific project page (e.g. 'cd neuroflow')\n" +
+          "  cd <project_id>    Navigate to specific project page (e.g. 'cd dophelper')\n" +
           "  cd ..              Return back to root homepage directory\n" +
           "  cat <project_id>   Examine raw tech specs inside terminal buffer\n" +
           "  skills             Inspect full skills directory payload\n" +
@@ -112,10 +112,9 @@ export default function ConsolePanel({
             addLog("success", 
               "DIRECTORY INDEX: /projects/\n" +
               "-----------------------------------------------------------\n" +
-              "  • omnisearch-ai   [AI]   Vector Hybrid Search (SLA 11ms)\n" +
-              "  • velosync-cache  [SYS]  LSM KV caching engine (Rust/Go)\n" +
-              "  • aether-vm       [COMP] 16-bit sandbox byte assembler\n" +
-              "  • neuroflow       [AI]   Matrix Autograd Tensor from scratch\n" +
+                "  • dophelper      [SYS]  Postal Web Automation (PySide6/Selenium)\n" +
+                "  • aidesk         [AI]   Voice & Text Systems Assistant (Python)\n" +
+                "  • dophelper-v2   [SYS]  Postal Desktop Automation (Electron/Playwright)\n" +
               "-----------------------------------------------------------\n" +
               "Tip: Type 'cd <project_id>' to open custom project view."
             );
@@ -128,10 +127,9 @@ export default function ConsolePanel({
           addLog("success", 
             "DIRECTORY INDEX: /projects/\n" +
             "-----------------------------------------------------------\n" +
-            "  • omnisearch-ai   [AI]   Vector Hybrid Search (SLA 11ms)\n" +
-            "  • velosync-cache  [SYS]  LSM KV caching engine (Rust/Go)\n" +
-            "  • aether-vm       [COMP] 16-bit sandbox byte assembler\n" +
-            "  • neuroflow       [AI]   Matrix Autograd Tensor from scratch\n" +
+            "  • dophelper      [SYS]  Postal Web Automation (PySide6/Selenium)\n" +
+            "  • aidesk         [AI]   Voice & Text Systems Assistant (Python)\n" +
+            "  • dophelper-v2   [SYS]  Postal Desktop Automation (Electron/Playwright)\n" +
             "-----------------------------------------------------------\n" +
             "Tip: Type 'cd <project_id>' to open custom project view."
           );
@@ -146,10 +144,9 @@ export default function ConsolePanel({
           addLog("success", 
             "DIRECTORY INDEX: /projects/\n" +
             "-----------------------------------------------------------\n" +
-            "  • omnisearch-ai   [AI]   Vector Hybrid Search (SLA 11ms)\n" +
-            "  • velosync-cache  [SYS]  LSM KV caching engine (Rust/Go)\n" +
-            "  • aether-vm       [COMP] 16-bit sandbox byte assembler\n" +
-            "  • neuroflow       [AI]   Matrix Autograd Tensor from scratch\n" +
+            "  • dophelper      [SYS]  Postal Web Automation (PySide6/Selenium)\n" +
+            "  • aidesk         [AI]   Voice & Text Systems Assistant (Python)\n" +
+            "  • dophelper-v2   [SYS]  Postal Desktop Automation (Electron/Playwright)\n" +
             "-----------------------------------------------------------\n" +
             "Tip: Type 'cd <project_id>' to open custom project view."
           );
@@ -162,7 +159,7 @@ export default function ConsolePanel({
         if (!target || target === "..") {
           onNavigate("#/");
           addLog("success", "NAVIGATION: Process working directory shifted to root '/'.");
-        } else if (["omnisearch-ai", "velosync-cache", "aether-vm", "neuroflow"].includes(target)) {
+        } else if (["dophelper", "aidesk", "dophelper-v2"].includes(target)) {
           onNavigate(`#/project/${target}`);
           addLog("success", `NAVIGATION: Working directory changed to '/projects/${target}'.`);
         } else {
@@ -174,41 +171,33 @@ export default function ConsolePanel({
       case "cat": {
         const target = args[0];
         if (!target) {
-          addLog("error", "Usage: cat <project_id> (e.g. 'cat neuroflow')");
+          addLog("error", "Usage: cat <project_id> (e.g. 'cat dophelper')");
           break;
         }
 
-        if (target === "omnisearch-ai") {
+        if (target === "dophelper") {
           addLog("success", 
-            "SPECIFICATION FILE: omnisearch-ai.md\n" +
-            "  Project     : OmniSearch AI Elastic Pipeline\n" +
-            "  Stack       : FastAPI, Milvus DB, Python, NumPy, Gemini Embedding\n" +
-            "  Metric      : P50 latency benchmarked at 11.4ms\n" +
-            "  Description : Semantic embedding index resolving high-dimensional similarity matches."
+            "SPECIFICATION FILE: dophelper.md\n" +
+            "  Project     : DOPHelper Postal Automation Suite\n" +
+            "  Stack       : Python, PySide6, Selenium, openpyxl, pandas\n" +
+            "  Metric      : Ingestion throughput benchmarked at 2,500 cols/s\n" +
+            "  Description : PySide6 desktop automation saving agents ~40 minutes per compiled report."
           );
-        } else if (target === "velosync-cache") {
+        } else if (target === "aidesk") {
           addLog("success", 
-            "SPECIFICATION FILE: velosync-cache.md\n" +
-            "  Project     : VeloSync LSM Storage Cache\n" +
-            "  Stack       : Rust, Go, RESP Protocol, Bloom Compactions\n" +
-            "  Metric      : Ingestion benchmarks hit 410,000 requests/sec\n" +
-            "  Description : Segmented log-structured write paths handling fast sequential flushes."
+            "SPECIFICATION FILE: aidesk.md\n" +
+            "  Project     : AIDesk Voice & Text Systems Assistant\n" +
+            "  Stack       : Python, SpeechRecognition, PyAudio, Gemini API\n" +
+            "  Metric      : Asynchronous voice decoding latency < 180 ms\n" +
+            "  Description : Desktop assistant running custom local screenshots, browser and system commands."
           );
-        } else if (target === "aether-vm") {
+        } else if (target === "dophelper-v2") {
           addLog("success", 
-            "SPECIFICATION FILE: aether-vm.md\n" +
-            "  Project     : Aether-VM Emulator & Compiler\n" +
-            "  Stack       : TypeScript, Uint16Array Buffers, HTML Canvas\n" +
-            "  Metric      : Instruction frequency averages 12.5 MIPS\n" +
-            "  Description : Custom 16-bit instructions parser with binary file output streams."
-          );
-        } else if (target === "neuroflow") {
-          addLog("success", 
-            "SPECIFICATION FILE: neuroflow.md\n" +
-            "  Project     : NeuroFlow NumPy Autograd Neural Framework\n" +
-            "  Stack       : Python 3, NumPy Array Slicing, Pure Calculus Linear\n" +
-            "  Metric      : Accuracies on MNIST dataset computed at 97.8%\n" +
-            "  Description : Self-contained automatic differentiation sorting partial weights backward."
+            "SPECIFICATION FILE: dophelper-v2.md\n" +
+            "  Project     : DOPHelper v2 Electron Automation\n" +
+            "  Stack       : Electron.js, Playwright, SQLite, SheetJS, React\n" +
+            "  Metric      : Local SQLite database querying latency < 1.8 ms\n" +
+            "  Description : Heavy-duty postal agent automation suite running Playwright CDPs in dedicated workers."
           );
         } else {
           addLog("error", `ERR: Specification file '${target}' not found.`);
@@ -220,13 +209,12 @@ export default function ConsolePanel({
         addLog("info", 
           "DATA ATTACHMENT READ: skills.json\n" +
           JSON.stringify({
-            languages: ["TypeScript", "Golang", "Rust", "Python", "C/C++", "HTML5/CSS3"],
-            architecture: {
-              neuralNetworks: ["Autograd", "Vector Search", "Gemini Middleware", "RAG Pipeline"],
-              systems: ["LSM-Tree KeyValue Store", "TCP RESP", "Compilers", "Docker Integration"],
-              frontend: ["Clean Semantic markup", "Grid/Flex layouts", "Tailwind styling", "TSX Routing"]
-            },
-            status: "Seeking premium enterprise-level software challenges"
+            languages: ["Python", "JavaScript", "TypeScript", "Java", "C++"],
+            frontend: ["React.js", "Next.js", "Tailwind CSS", "HTML/CSS/JS", "Material-UI"],
+            backend: ["Node.js", "Express.js", "FastAPI", "RESTful APIs"],
+            databases: ["MongoDB", "PostgreSQL", "MySQL", "Firebase"],
+            ai_ml: ["TensorFlow", "Scikit-learn", "NLP", "Computer Vision", "Deep Learning", "GenAI"],
+            tools: ["Git", "Linux", "Playwright", "Selenium", "Pandas", "Numpy"]
           }, null, 2)
         );
         break;
@@ -346,7 +334,7 @@ export default function ConsolePanel({
               value={inputVal}
               onKeyDown={handleKeyDown}
               onChange={e => setInputVal(e.target.value)}
-              placeholder="e.g. 'help', 'projects', 'cd omnisearch-ai', 'theme'..."
+              placeholder="e.g. 'help', 'projects', 'cd dophelper', 'theme'..."
               className="flex-1 bg-slate-900 p-2 border border-slate-800 rounded-md font-mono text-[11px] focus:outline-none focus:border-slate-500 text-slate-100 placeholder-slate-600 block text-left"
               aria-label="Interactive command prompt interface"
               autoComplete="off"

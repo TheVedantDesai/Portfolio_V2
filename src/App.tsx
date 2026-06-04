@@ -20,7 +20,7 @@ import {
   Code
 } from "lucide-react";
 
-import { PROJECTS, SKILL_CATEGORIES, EXPERIENCE } from "./data";
+import { PROJECTS, SKILL_CATEGORIES, EXPERIENCE, personalInfo } from "./data";
 import MarkdownRenderer from "./components/MarkdownRenderer";
 import ConsolePanel from "./components/ConsolePanel";
 
@@ -78,12 +78,12 @@ export default function App() {
       <header className="border-b border-neutral-200 dark:border-neutral-800 pb-5 mb-8">
         <div className="flex justify-between items-start gap-4">
           <div>
-            <h1 className="text-3xl font-serif font-bold tracking-tight m-0 text-neutral-900 dark:text-neutral-50">
-              Vedant Desai
+            <h1 className="text-3xl font-serif font-bold tracking-tight m-0 text-neutral-900 dark:text-neutral-50 animate-fade-in">
+              {personalInfo.name}
             </h1>
             <p className="font-mono text-xs text-neutral-500 dark:text-neutral-400 mt-1 mb-0 uppercase tracking-widest flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-              Systems & Machine Learning Engineer
+              Software Developer
             </p>
           </div>
           
@@ -110,25 +110,20 @@ export default function App() {
 
         {/* PRIMARY META SOCIALS INDEX */}
         <div className="flex flex-wrap gap-x-4 gap-y-2 mt-4 text-xs font-mono">
-          <a href="mailto:vedant27803@gmail.com" className="flex items-center gap-1 border-b-0 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+          <a href="mailto:vedant.anil.desai@gmail.com" className="flex items-center gap-1 border-b-0 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
             <Mail size={12} />
-            <span>vedant27803@gmail.com</span>
+            <span>vedant.anil.desai@gmail.com</span>
           </a>
           <span className="text-slate-300 dark:text-slate-700">|</span>
-          <a href="https://github.com/vedant27803" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 border-b-0 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+          <a href={personalInfo.socialLinks.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 border-b-0 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
             <Github size={12} />
-            <span>github.com/vedant27803</span>
+            <span>github.com/TheVedantDesai</span>
           </a>
           <span className="text-slate-300 dark:text-slate-700">|</span>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 border-b-0 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+          <a href={personalInfo.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 border-b-0 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
             <Linkedin size={12} />
             <span>LinkedIn Profile</span>
           </a>
-          <span className="text-slate-300 dark:text-slate-700">|</span>
-          <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1 select-none">
-            <Terminal size={12} />
-            <span>SLA: 99.98% uptime</span>
-          </span>
         </div>
       </header>
 
@@ -146,11 +141,8 @@ export default function App() {
                 ~/about_me
               </h2>
               <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-sans">
-                I am a specialized software systems engineer specializing in low-level compilation mechanics, custom persistent database state layers, and self-contained automatic differentiation algorithms. Rather than loading large abstraction frameworks, I write real low-overhead implementations from scratch to optimize cycle allocations and system runtimes.
+                {personalInfo.title}
               </p>
-              <blockquote className="bg-slate-50 dark:bg-slate-900/30 p-3.5 rounded-lg text-xs italic text-slate-700 dark:text-slate-300 select-none border-l-2 border-slate-300 dark:border-slate-700">
-                "Simple is better than complex. Raw semantic, high-performance compilation provides durable foundations for scaled software ecosystems."
-              </blockquote>
             </section>
 
             {/* PROJECTS DIRECTORY SECTION */}
@@ -215,14 +207,14 @@ export default function App() {
                 ~/skills/
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {SKILL_CATEGORIES.map(category => (
-                  <div key={category.name} className="border border-slate-200 dark:border-slate-800 rounded-lg p-5 bg-white dark:bg-slate-900/10">
+                {SKILL_CATEGORIES.map(cat => (
+                  <div key={cat.category} className="border border-slate-200 dark:border-slate-800 rounded-lg p-5 bg-white dark:bg-slate-900/10">
                     <h3 className="m-0 font-serif text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 pb-2 border-b border-dashed border-slate-200 dark:border-slate-800">
                       <Code size={13} className="text-slate-500 dark:text-slate-400" />
-                      <span>{category.name}</span>
+                      <span>{cat.category}</span>
                     </h3>
                     <ul className="list-none p-0 m-0 mt-3 space-y-2">
-                      {category.items.map(skill => (
+                      {cat.items.map(skill => (
                         <li key={skill} className="text-xs font-mono text-slate-700 dark:text-slate-300 flex items-start gap-2">
                           <span className="text-sky-500 dark:text-sky-400 select-none font-bold">•</span>
                           <span>{skill}</span>
@@ -241,7 +233,7 @@ export default function App() {
               </h2>
               <div className="space-y-6">
                 {EXPERIENCE.map(exp => (
-                  <div key={exp.company} className="border border-slate-200 dark:border-slate-800/80 p-5 rounded-lg bg-slate-50/20 dark:bg-slate-900/10">
+                  <div key={`${exp.company}-${exp.role}`} className="border border-slate-200 dark:border-slate-800/80 p-5 rounded-lg bg-slate-50/20 dark:bg-slate-900/10 animate-fade-in">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 mb-3.5">
                       <div>
                         <h3 className="m-0 text-sm font-serif font-bold text-slate-900 dark:text-slate-50">
@@ -251,24 +243,29 @@ export default function App() {
                           {exp.company}
                         </p>
                       </div>
-                      <span className="text-xs font-mono text-slate-600 dark:text-slate-300 py-0.5 px-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded self-start sm:self-center">
+                      <span className="text-xs font-mono text-slate-600 dark:text-slate-300 py-0.5 px-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded self-start sm:self-center select-none">
                         {exp.period}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-700 dark:text-slate-300 m-0 font-sans leading-relaxed mb-3">
-                      {exp.description}
-                    </p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      {exp.achievements.map((ach, idx) => (
-                        <li key={idx} className="text-xs font-mono text-slate-600 dark:text-slate-300 leading-relaxed">
-                          {ach}
-                        </li>
-                      ))}
-                    </ul>
+                    {exp.description && (
+                      <p className="text-xs text-slate-700 dark:text-slate-300 m-0 font-sans leading-relaxed mb-3">
+                        {exp.description}
+                      </p>
+                    )}
+                    {exp.achievements && exp.achievements.length > 0 && (
+                      <ul className="list-disc pl-5 space-y-1">
+                        {exp.achievements.map((ach, idx) => (
+                          <li key={idx} className="text-xs font-mono text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {ach}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>
             </section>
+
 
             {/* SIMPLE REUSABLE CONTACT FORM & FOOTER */}
             <section aria-labelledby="section-contact">
@@ -276,14 +273,11 @@ export default function App() {
                 ~/contact.md
               </h2>
               <div className="border border-slate-200 dark:border-slate-800 rounded-lg p-5 bg-white dark:bg-slate-900/10">
-                <p className="text-xs font-mono text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
-                  Have an interesting systems-architecture challenge or open-source database experiment? Send an email or initialize connection parameters in the message system below.
-                </p>
                 <form 
                   onSubmit={(e) => {
                     e.preventDefault();
                     alert("DEMO CONTACT ENGINE: Connection request parsed. Mailto triggers standard email services.");
-                    window.location.href = "mailto:vedant27803@gmail.com?subject=Portfolio%20Connection";
+                    window.location.href = "mailto:vedant.anil.desai@gmail.com?subject=Portfolio%20Connection";
                   }} 
                   className="space-y-3"
                 >
@@ -368,67 +362,28 @@ export default function App() {
 
                   {/* PROJECT ACTION GATEWAY - FOOTER */}
                   <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 space-y-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-6 border-b border-dashed border-slate-200 dark:border-slate-800">
+                    <div className="pb-6 border-b border-dashed border-slate-200 dark:border-slate-800">
                       
-                      {/* Telemetry & Technology Stack Info Box */}
-                      <div className="space-y-4">
-                        <div>
-                          <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0 pb-2 border-b border-dashed border-slate-200 dark:border-slate-800 flex items-center gap-1.5 select-none font-bold">
-                            <Cpu size={12} />
-                            <span>Telemetry Metrics</span>
-                          </h3>
-                          <div className="mt-2.5 space-y-1.5 font-mono text-[11px]">
-                            {activeProject.stats.map(stat => (
-                              <div key={stat.label} className="flex justify-between items-center py-1 border-b border-slate-100 dark:border-slate-900 border-dashed">
-                                <span className="text-slate-500 dark:text-slate-400">{stat.label}:</span>
-                                <span className="text-slate-900 dark:text-slate-50 font-bold">{stat.value}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div>
-                          <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0 pb-1.5 flex items-center gap-1.5 select-none font-bold">
-                            <Layers size={11} className="text-slate-400" />
-                            <span>Framework Stack</span>
-                          </h3>
-                          <div className="flex flex-wrap gap-1 mt-1.5">
-                            {activeProject.technologies.map(tech => (
-                              <span 
-                                key={tech} 
-                                className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-[10px] font-mono border border-slate-200 dark:border-slate-800"
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Download Utility */}
+                      {/* Technology Stack Info Box Only */}
                       <div>
-                        <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0 pb-2 border-b border-dashed border-slate-200 dark:border-slate-800 flex items-center gap-1.5 select-none font-bold">
-                          <FileDown size={12} />
-                          <span>Storage Downloads</span>
+                        <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 m-0 pb-1.5 flex items-center gap-1.5 select-none font-bold">
+                          <Layers size={11} className="text-slate-400" />
+                          <span>Framework Stack</span>
                         </h3>
-                        <div className="mt-2.5 space-y-2">
-                          {activeProject.downloads.map((dl, idx) => (
-                            <a 
-                              key={idx} 
-                              href={dl.url} 
-                              target="_blank"  
-                              rel="noopener noreferrer" 
-                              className="flex items-center justify-between p-2 rounded-md bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+                        <div className="flex flex-wrap gap-1 mt-1.5">
+                          {activeProject.technologies.map(tech => (
+                            <span 
+                              key={tech} 
+                              className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-[10px] font-mono border border-slate-200 dark:border-slate-800"
                             >
-                              <span className="text-slate-600 dark:text-slate-400 select-all">{dl.label}</span>
-                              <FileDown size={11} className="text-slate-400 dark:text-slate-500 flex-shrink-0 ml-1" />
-                            </a>
+                              {tech}
+                            </span>
                           ))}
                         </div>
                       </div>
                     </div>
 
-                    {/* GitHub inspect source code button */}
+                    {/* Custom actionable CTA button */}
                     <div className="flex justify-center">
                       <a 
                         href={activeProject.githubUrl} 
@@ -437,7 +392,7 @@ export default function App() {
                         className="w-full bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-center justify-center flex items-center gap-2 font-mono text-xs border border-slate-200 dark:border-slate-800 py-3.5 cursor-pointer rounded-lg hover:text-sky-600 dark:hover:text-sky-400 transition-all font-semibold"
                       >
                         <Github size={13} />
-                        <span>Inspect Complete Technical Source Code</span>
+                        <span>{activeProject.ctaText || "Inspect Complete Technical Source Code"}</span>
                       </a>
                     </div>
                   </footer>

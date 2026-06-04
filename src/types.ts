@@ -18,18 +18,35 @@ export interface Project {
   title: string;
   tagline: string;
   description: string;
-  category: "Systems" | "AI/ML" | "Compilers";
+  category: string;
   technologies: string[];
   markdownContent: string;
   githubUrl: string;
   demoUrl?: string;
+  ctaText?: string;
   stats: CodeStat[];
   downloads: ProjectDownload[];
 }
 
 export interface SkillCategory {
-  name: string;
+  category: string;
   items: string[];
+}
+
+export interface ExperienceRole {
+  title: string;
+  employmentType: string; // e.g., Full-time, Internship
+  startDate: string; // e.g., 'Jun 2025'
+  endDate: string; // e.g., 'Present' or 'Jun 2025'
+  description?: string;
+  skills?: string[];
+}
+
+export interface ExperienceCompany {
+  company: string;
+  location?: string; // 'Pune, Maharashtra, India · On-site'
+  logoUrl?: string; // Optional company logo URL; falls back to initials avatar
+  roles: ExperienceRole[];
 }
 
 export interface ExperienceItem {
