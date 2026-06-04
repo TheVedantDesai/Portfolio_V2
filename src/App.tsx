@@ -7,16 +7,12 @@ import { useState, useEffect } from "react";
 import { 
   Github, 
   ExternalLink, 
-  FileDown, 
   ArrowLeft, 
   Mail, 
   Linkedin, 
   Sun, 
   Moon, 
-  Cpu, 
   Layers, 
-  Briefcase, 
-  Terminal,
   Code
 } from "lucide-react";
 

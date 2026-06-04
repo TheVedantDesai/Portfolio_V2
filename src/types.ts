@@ -3,16 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export interface CodeStat {
-  label: string;
-  value: string;
-}
-
-export interface ProjectDownload {
-  label: string;
-  url: string;
-}
-
 export interface Project {
   id: string;
   title: string;
@@ -22,10 +12,7 @@ export interface Project {
   technologies: string[];
   markdownContent: string;
   githubUrl: string;
-  demoUrl?: string;
   ctaText?: string;
-  stats: CodeStat[];
-  downloads: ProjectDownload[];
 }
 
 export interface SkillCategory {
@@ -55,9 +42,4 @@ export interface ExperienceItem {
   period: string;
   description: string;
   achievements: string[];
-}
-
-export interface AppState {
-  currentRoute: string; // "#/" (home) or "#/project/:id"
-  theme: "light" | "dark";
 }

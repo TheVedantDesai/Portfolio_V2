@@ -25,7 +25,7 @@ export const personalInfo = {
   }
 };
 
-export const skillsData = [
+const skillsData = [
   {
     category: 'Frontend Development',
     items: ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Material-UI'],
@@ -52,13 +52,13 @@ export const skillsData = [
   },
 ];
 
-export const projectsData = [
+const projectsData = [
   {
     title: 'DOPHelper',
     description: 'Created a Python based Desktop application that helps MPKBY agents (India Post) to automate their tasks of Creating Lists and formatting the reports and creation of declarations. this is made possible with use of PySide6 and Selenium along with openpyxl and pandas.',
     image: '/Banners/DOPHelper.png',
     tags: ['Python', 'Web Automation', 'Selenium', 'PySide6', 'Openpyxl', 'Pandas'],
-    link: 'https://github.com/Desai-Vedant/DOPHelper'
+    link: 'https://github.com/TheVedantDesai/DOPHelper/releases'
   },
   {
     title: 'AIDesk',
@@ -72,11 +72,11 @@ export const projectsData = [
     description: 'A Modern and powerful Electron Based Desktop application that helps MPKBY agents (India Post) to automate their tasks of Creating Lists and formatting the reports and creation of declarations. this is made possible with use of Electron.js and Playwright along with sheetJS.',
     image: '/Banners/DOPHelperV2.png',
     tags: ['MERN', 'React', 'Electron.js', 'SQLite', 'Playwright', 'SheetJS'],
-    link: 'https://github.com/Desai-Vedant/TaskTracker'
+    link: 'https://github.com/dophelperofficial/dop-helper-application/releases'
   }
-]; 
+];
 
-export const experiencesData: ExperienceCompany[] = [
+const experiencesData: ExperienceCompany[] = [
   {
     company: 'nCircle Tech',
     location: 'Pune, Maharashtra, India · On-site',
@@ -112,17 +112,7 @@ export const PROJECTS: Project[] = [
     technologies: projectsData[0].tags,
     markdownContent: dophelperMd,
     githubUrl: projectsData[0].link,
-    demoUrl: "https://github.com/Desai-Vedant/DOPHelper#readme",
-    stats: [
-      { label: "Tasks Automated", value: "100%" },
-      { label: "Accuracy Rate", value: "100%" },
-      { label: "Ingestion Speed", value: "2,500 cols/s" },
-      { label: "Time Saved", value: "~40 min/list" }
-    ],
-    downloads: [
-      { label: "Windows Standalone Executable (.exe)", url: "https://github.com/Desai-Vedant/DOPHelper/releases" },
-      { label: "Full Agent Manual Guide (PDF)", url: "https://github.com/Desai-Vedant/DOPHelper#readme" }
-    ]
+    ctaText: "Download Installer (.exe)",
   },
   {
     id: "aidesk",
@@ -133,19 +123,9 @@ export const PROJECTS: Project[] = [
     technologies: [...projectsData[1].tags, "SpeechRecognition", "PyAudio", "Gemini API"],
     markdownContent: aideskMd,
     githubUrl: projectsData[1].link,
-    demoUrl: "https://github.com/Desai-Vedant/AIDesk#readme",
-    stats: [
-      { label: "Voice Latency", value: "< 180 ms" },
-      { label: "Intent F1-Score", value: "96.4%" },
-      { label: "Native OS Bridge", value: "< 8 ms" },
-      { label: "AI Backend Hub", value: "Gemini Loop" }
-    ],
-    downloads: [
-      { label: "Python Core Source Bundle (.zip)", url: "https://github.com/Desai-Vedant/AIDesk/archive/refs/heads/main.zip" },
-      { label: "Developer Hardware Setup MD", url: "https://github.com/Desai-Vedant/AIDesk#readme" }
-    ]
+    ctaText: "View Source Code",
   },
-  
+
   {
     id: "dophelper-v2",
     title: "DOPHelper v2",
@@ -155,22 +135,12 @@ export const PROJECTS: Project[] = [
     technologies: projectsData[2].tags,
     markdownContent: dophelperV2Md,
     githubUrl: projectsData[2].link,
-    demoUrl: "https://github.com/Desai-Vedant/TaskTracker#readme",
-    stats: [
-      { label: "Automation Core", value: "Playwright CDP" },
-      { label: "SQLite Sync Phase", value: "< 1.8 ms" },
-      { label: "Engine Boot Stage", value: "< 1.1 sec" },
-      { label: "Data Compiler", value: "SheetJS Engine" }
-    ],
-    downloads: [
-      { label: "Electron Core API Module", url: "https://github.com/Desai-Vedant/TaskTracker" },
-      { label: "Relational Schema SQL Script", url: "https://github.com/Desai-Vedant/TaskTracker" }
-    ]
+    ctaText: "Download Installer (.exe)",
   }
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = skillsData;
-export const EXPERIENCE: ExperienceItem[] = experiencesData.flatMap(company => 
+export const EXPERIENCE: ExperienceItem[] = experiencesData.flatMap(company =>
   company.roles.map(role => ({
     role: role.title,
     company: company.company,
