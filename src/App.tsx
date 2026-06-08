@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 import { 
   Github, 
   ExternalLink, 
@@ -19,10 +20,19 @@ import {
 import { PROJECTS, SKILL_CATEGORIES, EXPERIENCE, personalInfo } from "./data";
 import MarkdownRenderer from "./components/MarkdownRenderer";
 import ConsolePanel from "./components/ConsolePanel";
+import { useToast } from "./components/Toast";
+
+// Initialize EmailJS
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+
 
 export default function App() {
+  const { showToast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Hash-based client-side router
   const [currentRoute, setCurrentRoute] = useState(window.location.hash || "#/");
+
   
   // Theme state
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -272,8 +282,62 @@ export default function App() {
                 <form 
                   onSubmit={(e) => {
                     e.preventDefault();
-                    alert("DEMO CONTACT ENGINE: Connection request parsed. Mailto triggers standard email services.");
-                    window.location.href = "mailto:vedant.anil.desai@gmail.com?subject=Portfolio%20Connection";
+                    // Validate inputs and prepare data
+                    if (typeof window === "undefined") return;
+                    const nameInput = document.getElementById("input-name") as HTMLInputElement;
+                    const emailInput = document.getElementById("input-email") as HTMLInputElement;
+                    const msgInput = document.getElementById("input-msg") as HTMLTextAreaElement;
+
+                    if (!nameInput.value || !emailInput.value || !msgInput.value) {
+                      showToast("Please fill in all fields before submitting.", "warning");
+                      return;
+                    }
+
+                    if(!/\S+@\S+\.\S+/.test(emailInput.value)) {
+                      showToast("Please enter a valid email address.", "warning");
+                      return;
+                    }
+
+                    const formData = {
+                      name: nameInput.value,
+                      email: emailInput.value,
+                      message: msgInput.value
+                    };
+
+                    setIsSubmitting(true);
+
+                    // Send Email with EmailJS
+                    try {
+                      const templateParams = {
+                        from_name: formData.name,
+                        from_email: formData.email,
+                        message: formData.message
+                      };
+
+                      emailjs.send(
+                        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                        templateParams
+                      ).then(
+                        () => {
+                          showToast("Message sent successfully! I'll get back to you soon.", "success");
+                          nameInput.value = "";
+                          emailInput.value = "";
+                          msgInput.value = "";
+                          setIsSubmitting(false);
+                        },
+                        (error: unknown) => {
+                          console.error("EmailJS error:", error);
+                          showToast("An error occurred while sending your message. Please try again later.", "error");
+                          setIsSubmitting(false);
+                        }
+                      );
+                    } catch (error) {
+                      console.error("Form submission error:", error);
+                      showToast("An unexpected error occurred. Please try again.", "error");
+                      setIsSubmitting(false);
+                    }
+
                   }} 
                   className="space-y-3"
                 >
@@ -282,20 +346,22 @@ export default function App() {
                       <label htmlFor="input-name" className="text-slate-700 dark:text-slate-300 font-medium block">Name:</label>
                       <input 
                         required 
+                        disabled={isSubmitting}
                         id="input-name"
                         type="text" 
                         placeholder="John Doe" 
-                        className="w-full bg-slate-100/50 dark:bg-slate-900/50 p-2 border border-slate-200 dark:border-slate-800 rounded-md focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500" 
+                        className="w-full bg-slate-100/50 dark:bg-slate-900/50 p-2 border border-slate-200 dark:border-slate-800 rounded-md focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed" 
                       />
                     </div>
                     <div className="space-y-1">
                       <label htmlFor="input-email" className="text-slate-700 dark:text-slate-300 font-medium block">Email:</label>
                       <input 
                         required 
+                        disabled={isSubmitting}
                         id="input-email"
                         type="email" 
                         placeholder="client@enterprise.com" 
-                        className="w-full bg-slate-100/50 dark:bg-slate-900/50 p-2 border border-slate-200 dark:border-slate-800 rounded-md focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500" 
+                        className="w-full bg-slate-100/50 dark:bg-slate-900/50 p-2 border border-slate-200 dark:border-slate-800 rounded-md focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed" 
                       />
                     </div>
                   </div>
@@ -303,14 +369,26 @@ export default function App() {
                     <label htmlFor="input-msg" className="text-slate-700 dark:text-slate-300 font-medium block">Message Pipeline Content:</label>
                     <textarea 
                       required 
+                      disabled={isSubmitting}
                       id="input-msg"
                       rows={3} 
                       placeholder="Input pipeline data structures..." 
-                      className="w-full bg-slate-100/50 dark:bg-slate-900/50 p-2 border border-slate-200 dark:border-slate-800 rounded-md focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                      className="w-full bg-slate-100/50 dark:bg-slate-900/50 p-2 border border-slate-200 dark:border-slate-800 rounded-md focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     ></textarea>
                   </div>
-                  <button type="submit" className="btn-primary hover:opacity-100">
-                    <span>Send UDP Connection (Trigger Email)</span>
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="btn-primary hover:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                        <span>TRANSMITTING PACKETS...</span>
+                      </>
+                    ) : (
+                      <span>Send UDP Connection (Trigger Email)</span>
+                    )}
                   </button>
                 </form>
               </div>

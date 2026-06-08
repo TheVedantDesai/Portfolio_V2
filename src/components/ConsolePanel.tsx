@@ -31,20 +31,20 @@ export default function ConsolePanel({
   onNavigate,
   toggleTheme,
 }: ConsolePanelProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [history, setHistory] = useState<LogEntry[]>([
     {
       timestamp: new Date().toLocaleTimeString(),
       type: "info",
       message: "SYSTEM SHELL: Interactive Terminal Sync Ready.\n" +
-               "This console is fully bound to the layout routing state.\n" +
-               "Type 'help' or click any of the quick command labels to control the interface."
+        "This console is fully bound to the layout routing state.\n" +
+        "Type 'help' or click any of the quick command labels to control the interface."
     }
   ]);
   const [inputVal, setInputVal] = useState("");
   const [cmdHistory, setCmdHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  
+
   const consoleBottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -71,7 +71,7 @@ export default function ConsolePanel({
     if (!cleanCmd) return;
 
     addLog("input", `$ ${cleanCmd}`);
-    
+
     setCmdHistory(prev => {
       const filtered = prev.filter(c => c !== cleanCmd);
       return [...filtered, cleanCmd];
@@ -85,7 +85,7 @@ export default function ConsolePanel({
 
     switch (primary) {
       case "help":
-        addLog("info", 
+        addLog("info",
           "===========================================================\n" +
           "PORTFOLIO COMPLIANT INTERACTIVE SHELL MANUAL\n" +
           "===========================================================\n" +
@@ -109,12 +109,12 @@ export default function ConsolePanel({
         const target = args[0];
         if (target) {
           if (target.toLowerCase() === "projects") {
-            addLog("success", 
+            addLog("success",
               "DIRECTORY INDEX: /projects/\n" +
               "-----------------------------------------------------------\n" +
-                "  • dophelper      [SYS]  Postal Web Automation (PySide6/Selenium)\n" +
-                "  • aidesk         [AI]   Voice & Text Systems Assistant (Python)\n" +
-                "  • dophelper-v2   [SYS]  Postal Desktop Automation (Electron/Playwright)\n" +
+              "  • dophelper      [SYS]  Postal Web Automation (PySide6/Selenium)\n" +
+              "  • aidesk         [AI]   Voice & Text Systems Assistant (Python)\n" +
+              "  • dophelper-v2   [SYS]  Postal Desktop Automation (Electron/Playwright)\n" +
               "-----------------------------------------------------------\n" +
               "Tip: Type 'cd <project_id>' to open custom project view."
             );
@@ -124,7 +124,7 @@ export default function ConsolePanel({
             addLog("error", `ls: cannot access '${target}': No such file or directory`);
           }
         } else {
-          addLog("success", 
+          addLog("success",
             "DIRECTORY INDEX: /projects/\n" +
             "-----------------------------------------------------------\n" +
             "  • dophelper      [SYS]  Postal Web Automation (PySide6/Selenium)\n" +
@@ -141,7 +141,7 @@ export default function ConsolePanel({
         if (args.length > 0) {
           addLog("error", "Usage: projects (type 'projects' or 'ls' with no arguments to list project indices).");
         } else {
-          addLog("success", 
+          addLog("success",
             "DIRECTORY INDEX: /projects/\n" +
             "-----------------------------------------------------------\n" +
             "  • dophelper      [SYS]  Postal Web Automation (PySide6/Selenium)\n" +
@@ -176,7 +176,7 @@ export default function ConsolePanel({
         }
 
         if (target === "dophelper") {
-          addLog("success", 
+          addLog("success",
             "SPECIFICATION FILE: dophelper.md\n" +
             "  Project     : DOPHelper Postal Automation Suite\n" +
             "  Stack       : Python, PySide6, Selenium, openpyxl, pandas\n" +
@@ -184,7 +184,7 @@ export default function ConsolePanel({
             "  Description : PySide6 desktop automation saving agents ~40 minutes per compiled report."
           );
         } else if (target === "aidesk") {
-          addLog("success", 
+          addLog("success",
             "SPECIFICATION FILE: aidesk.md\n" +
             "  Project     : AIDesk Voice & Text Systems Assistant\n" +
             "  Stack       : Python, SpeechRecognition, PyAudio, Gemini API\n" +
@@ -192,7 +192,7 @@ export default function ConsolePanel({
             "  Description : Desktop assistant running custom local screenshots, browser and system commands."
           );
         } else if (target === "dophelper-v2") {
-          addLog("success", 
+          addLog("success",
             "SPECIFICATION FILE: dophelper-v2.md\n" +
             "  Project     : DOPHelper v2 Electron Automation\n" +
             "  Stack       : Electron.js, Playwright, SQLite, SheetJS, React\n" +
@@ -206,7 +206,7 @@ export default function ConsolePanel({
       }
 
       case "skills":
-        addLog("info", 
+        addLog("info",
           "DATA ATTACHMENT READ: skills.json\n" +
           JSON.stringify({
             languages: ["Python", "JavaScript", "TypeScript", "Java", "C++"],
@@ -240,14 +240,14 @@ export default function ConsolePanel({
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (cmdHistory.length === 0) return;
-      
+
       const newIndex = historyIndex === -1 ? cmdHistory.length - 1 : Math.max(0, historyIndex - 1);
       setHistoryIndex(newIndex);
       setInputVal(cmdHistory[newIndex]);
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
       if (cmdHistory.length === 0) return;
-      
+
       if (historyIndex === -1) return;
       const newIndex = historyIndex + 1;
       if (newIndex >= cmdHistory.length) {
@@ -274,7 +274,7 @@ export default function ConsolePanel({
           <Terminal size={13} className="text-slate-400" />
           <span>Interactive Core Shell</span>
         </div>
-        <button 
+        <button
           onClick={() => setIsOpen(!isOpen)}
           className="hover:text-white dark:hover:text-white cursor-pointer px-2 py-0.5 border border-dashed border-slate-700 hover:border-slate-500 rounded text-[9px] text-slate-400 transition-colors"
         >
@@ -293,9 +293,9 @@ export default function ConsolePanel({
                 </span>
                 <span className={
                   log.type === "success" ? "text-emerald-400 font-medium" :
-                  log.type === "error" ? "text-rose-400 font-medium" :
-                  log.type === "input" ? "text-sky-400 font-semibold" :
-                  "text-slate-300"
+                    log.type === "error" ? "text-rose-400 font-medium" :
+                      log.type === "input" ? "text-sky-400 font-semibold" :
+                        "text-slate-300"
                 }>
                   {log.message}
                 </span>
@@ -327,7 +327,7 @@ export default function ConsolePanel({
               <span>portfolio@user</span>
               <span className="text-slate-500">$</span>
             </div>
-            
+
             <input
               ref={inputRef}
               type="text"
@@ -342,9 +342,9 @@ export default function ConsolePanel({
               autoCapitalize="off"
               spellCheck={false}
             />
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               className="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 hover:text-white text-slate-300 flex items-center gap-1 text-[11px] cursor-pointer border border-transparent font-medium"
               aria-label="Submit command"
             >

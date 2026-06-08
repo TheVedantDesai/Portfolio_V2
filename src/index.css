@@ -259,3 +259,48 @@ blockquote {
 .btn-secondary:active {
   transform: translateY(1px);
 }
+
+/* Custom Toast Animations & Utilities */
+@keyframes toast-slide-in {
+  from {
+    transform: translateY(1rem) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-fade-out {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(0.5rem) scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes toast-progress-shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.toast-enter {
+  animation: toast-slide-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-exit {
+  animation: toast-fade-out 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-progress {
+  animation: toast-progress-shrink linear forwards;
+}
+
