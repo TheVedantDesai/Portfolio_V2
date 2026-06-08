@@ -1,4 +1,4 @@
-# Software Developer Portfolio
+# Software Developer Portfolio (MD based)
 
 A production-grade, highly optimized software developer portfolio designed with a clean minimalist aesthetic. It features a raw, semantic markup core, cohesive typography, and an interactive developer-focused terminal panel that bridges system interaction with visual portfolio navigation.
 
